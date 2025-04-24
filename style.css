@@ -313,4 +313,23 @@ h1 {
 #review-section button.submit-order:hover {
     background-color: #3b7dc2;
 }
+/* ✅ تحسين شكل المينيو على الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .menu-item {
+        width: 45%; /* خلي كل عنصر ياخد نصف الصف تقريبا */
+    }
 
+    .menu-item img {
+        height: 100px; /* تقليل ارتفاع الصورة */
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-item {
+        width: 100%; /* كل عنصر ياخد العرض بالكامل */
+    }
+
+    .menu-item img {
+        height: 90px; /* تصغير الصورة أكتر */
+    }
+}
