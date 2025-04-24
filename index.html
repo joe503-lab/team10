@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -26,60 +26,60 @@
         <div class="menu-container">
             <div class="menu-item">
                 <span>Pizza</span>
-                <img src="https://media.elbalad.news/2024/10/large/970/7/550.jpg" alt="Pizza"/>
+                <img src="https://media.elbalad.news/2024/10/large/970/7/550.jpg" alt="Pizza">
                 <span>180 EGP</span>
                 <button class="add-item" onclick="addItem('Pizza', 180)">Add</button>
             </div>
             <div class="menu-item">
                 <span>Burger</span>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR76ofD1B4fZ_ZuvJxv4rvWRBVocwreUzIuvg&amp;s" alt="Burger"/>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR76ofD1B4fZ_ZuvJxv4rvWRBVocwreUzIuvg&s" alt="Burger">
                 <span>85 EGP</span>
                 <button class="add-item" onclick="addItem('Burger', 85)">Add</button>
             </div>
             <div class="menu-item">
                 <span>Pasta</span>
-                <img src="https://images.akhbarelyom.com//images/images/medium/20211019121241145.jpg" alt="Pasta"/>
+                <img src="https://images.akhbarelyom.com//images/images/medium/20211019121241145.jpg" alt="Pasta">
                 <span>90 EGP</span>
                 <button class="add-item" onclick="addItem('Pasta', 90)">Add</button>
             </div>
             <div class="menu-item">
                 <span>Salad</span>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp2rMTnBtIfe1uI18bhcv0d7ASU2vF84gwIQ&amp;s" alt="Salad"/>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp2rMTnBtIfe1uI18bhcv0d7ASU2vF84gwIQ&s" alt="Salad">
                 <span>25 EGP</span>
                 <button class="add-item" onclick="addItem('Salad', 25)">Add</button>
             </div>
             <div class="menu-item">
                 <span>Sushi</span>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFnlG6fLpRXoU9btpJ2klYwoq9GyE4ZHrMQA&amp;s" alt="Sushi"/>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFnlG6fLpRXoU9btpJ2klYwoq9GyE4ZHrMQA&s" alt="Sushi">
                 <span>300 EGP</span>
                 <button class="add-item" onclick="addItem('Sushi', 300)">Add</button>
             </div>
             <div class="menu-item">
                 <span>Coleslaw</span>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Coleslaw_%281%29.jpg/640px-Coleslaw_%281%29.jpg" alt="Coleslaw"/>
+                <img src="https://www.jocooks.com/wp-content/uploads/2020/02/kfc-coleslaw-1-8.jpg" alt="Coleslaw">
+
                 <span>30 EGP</span>
                 <button class="add-item" onclick="addItem('Coleslaw', 30)">Add</button>
             </div>
-        </div>
-
-        <!-- Choose Order Type -->
-        <div class="order-type-container">
-            <span class="order-type-label">Choose Order Type:</span>
-            <div class="order-type-options">
-                <input type="radio" id="takeaway" name="orderType" value="Takeaway"/>
-                <label for="takeaway">Takeaway</label>
-
-                <input type="radio" id="dinein" name="orderType" value="Dine-in"/>
-                <label for="dinein">Dine-in</label>
-
-                <input type="radio" id="reservation" name="orderType" value="Online Reservation"/>
-                <label for="reservation">Online Reservation</label>
+            
+            <!-- Choose Order Type -->
+            <div class="order-type-container">
+                <span class="order-type-label">Choose Order Type:</span>
+                <div class="order-type-options">
+                    <input type="radio" id="takeaway" name="orderType" value="Takeaway">
+                    <label for="takeaway">Takeaway</label>
+            
+                    <input type="radio" id="dinein" name="orderType" value="Dine-in">
+                    <label for="dinein">Dine-in</label>
+            
+                    <input type="radio" id="reservation" name="orderType" value="Online Reservation">
+                    <label for="reservation">Online Reservation</label>
+                </div>
             </div>
-        </div>
+            
 
-        <a href="#" onclick="showReview()">
-            <button class="button">Review Order</button>
-        </a>
+            <a href="#" onclick="showReview()"><button class="button">Review Order</button></a>
+        </div>
     </section>
 
     <!-- Review Section -->
@@ -89,10 +89,11 @@
             <!-- Order items will appear here -->
         </div>
         <label for="table-number">Enter Table Number:</label>
-        <input type="number" id="table-number" placeholder="Table Number" min="1"/>
+        <input type="number" id="table-number" placeholder="Table Number" min="1">
         <button class="submit-order" onclick="submitOrder()">Submit Order</button>
     </section>
 
     <script src="script.js"></script>
 </body>
+
 </html>
