@@ -1,115 +1,117 @@
-// مصفوفة لتخزين الأطعمة المختارة
-let selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
+let selectedItems = JSON.parse(localStorage.getItem("selectedItems")) || [];
+let chosenOrderType = null;
 
-// وظيفة لإظهار منيو الطعام
 function showMenu() {
     document.getElementById("welcome-section").style.display = "none";
     document.getElementById("menu-section").style.display = "block";
 }
 
-// وظيفة لإضافة الأطعمة للطلب
 function addItem(item, price) {
-    // إضافة الطعام إلى المصفوفة
     selectedItems.push({ item, price });
-    localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
+    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
 
-    // عرض رسالة التنبيه داخل الصفحة
-    const notification = document.getElementById('notification');
-    notification.textContent = `${item} added to your order!`;
-    notification.classList.add('show');  // إضافة الكلاس لعرض الرسالة
+    const notification = document.getElementById("notification");
 
-    // إخفاء الرسالة بعد 3 ثواني
-    setTimeout(() => {
-        notification.classList.remove('show');  // إزالة الكلاس بعد 3 ثواني
-    }, 3000);
+    // تحقق من وجود العنصر أولًا
+    if (notification) {
+        notification.textContent = `${item} was added to your order!`;
+        notification.classList.add("show");
+
+        setTimeout(() => notification.classList.remove("show"), 3000);
+    } else {
+        console.error("Notification element not found!");
+    }
 }
 
-// وظيفة لإظهار صفحة مراجعة الطلب
+
 function showReview() {
     document.getElementById("menu-section").style.display = "none";
     document.getElementById("review-section").style.display = "block";
 
     let totalPrice = 0;
-    const orderSummary = document.querySelector('.order-summary');
+    const orderSummary = document.querySelector(".order-summary");
+    orderSummary.innerHTML = "";
 
-    // مسح محتوى المراجعة السابقة
-    orderSummary.innerHTML = '';
-
-    // عرض الأطعمة المختارة في صفحة المراجعة مع إضافة زر الحذف
     selectedItems.forEach((item, index) => {
         totalPrice += item.price;
-
-        const itemDiv = document.createElement('div');
-        itemDiv.classList.add('order-item');
-
-        itemDiv.innerHTML = `
-            <span>${item.item} - ${item.price} EGP</span>
-            <div>
-                <button class="delete-btn" onclick="removeItem(${index})">Remove</button>
-                <button class="add-btn" onclick="showMenu()">Add Another Item</button>
+        orderSummary.innerHTML += `
+            <div class="order-item">
+                <span>${item.item} - ${item.price} EGP</span>
+                <div>
+                    <button class="delete-btn" onclick="removeItem(${index})">Remove</button>
+                    <button class="add-btn" onclick="showMenu()">Add another item</button>
+                </div>
             </div>
         `;
-
-        orderSummary.appendChild(itemDiv);
     });
 
-    const totalDiv = document.createElement('div');
-    totalDiv.classList.add('total-price');
-    totalDiv.textContent = `Total Price: ${totalPrice} EGP`;
-    orderSummary.appendChild(totalDiv);
+    orderSummary.innerHTML += `<div class="total-price">Total Price: ${totalPrice} EGP</div>`;
 }
 
-// وظيفة لحذف عنصر من الطلب
 function removeItem(index) {
-    // إزالة العنصر من المصفوفة
     selectedItems.splice(index, 1);
-    localStorage.setItem('selectedItems', JSON.stringify(selectedItems));
-
-    // إعادة عرض صفحة المراجعة بعد التعديل
+    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
     showReview();
 }
 
-// وظيفة لإرسال الطلب
 function submitOrder() {
-    const tableNumber = document.getElementById('table-number').value;
-    if (!tableNumber) {
-        alert("Please enter your table number.");
-        return;
+    // 1. اجلب رقم الطاولة
+    const tableNumberInput = document.getElementById("table-number");
+    const tableNumber = tableNumberInput.value.trim();
+
+    // 2. اجلب كل راديو بوتونز باسم orderType
+    const orderTypeRadios = document.getElementsByName("orderType");
+    let orderTypeValue;
+    for (const radio of orderTypeRadios) {
+        if (radio.checked) {
+            orderTypeValue = radio.value;
+            break;
+        }
     }
 
-    // جلب الطلبات المحفوظة في localStorage
-    const selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
-
+    // 3. التحقق من صحة البيانات
+    if (!tableNumber) {
+        alert("Please enter your table number.");
+        tableNumberInput.focus();
+        return;
+    }
+    if (!orderTypeValue) {
+        alert("Please select the order type.");
+        return;
+    }
     if (selectedItems.length === 0) {
         alert("Your order is empty!");
         return;
     }
 
-    // إرسال الطلب إلى السيرفر باستخدام fetch
+    // 4. جهّز جسم الطلب
+    const orderData = {
+        tableNumber: Number(tableNumber),
+        order: selectedItems,
+        orderType: orderTypeValue
+    };
+
+    // 5. طباعة بيانات الطلب في الـ console للـ debugging
+    console.log("🔍 Submitting Order:", orderData);
+
+    // 6. أرسل الـ POST إلى السيرفر
     fetch("http://localhost:3000/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tableNumber, order: selectedItems })
+        body: JSON.stringify(orderData)
     })
-    .then(response => response.json())
+    .then(async response => {
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.message);
+        return payload;
+    })
     .then(data => {
-        alert(data.message); // عرض رسالة التأكيد
-        localStorage.clear(); // مسح الطلبات بعد الإرسال
-        window.location.reload(); // إعادة تحميل الصفحة
+        alert(data.message);
+        localStorage.clear();
+        window.location.reload();
     })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("Failed to send order. Please try again.");
-    });
-}
-
-
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-            console.log('Service Worker registered with scope:', registration.scope);
-        }).catch((error) => {
-            console.log('Service Worker registration failed:', error);
-        });
+    .catch(err => {
+        console.error("❌ Submit failed:", err);
+        alert(err.message || "Failed to submit the order. Please try again.");
     });
 }
