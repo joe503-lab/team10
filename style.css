@@ -40,26 +40,155 @@ h1 {
 
 /* قسم منيو الطعام */
 #menu-section {
-    padding: 20px;
+    padding: 10px;
     background-color: #333;
     color: white;
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping of items into new rows if needed */
+    justify-content: space-around; /* Spread items across the available space */
+}
+h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 30px;
+    background-image: linear-gradient(45deg, #ff6347, #ffa07a, #add8e6, #90ee90); /* ألوان متدرجة */
+    -webkit-background-clip: text;  /* النسخة مع البريفكس */
+    background-clip: text;  /* النسخة القياسية */
+    color: transparent;  /* جعل النص شفاف لكي يظهر تأثير الخلفية */
+    animation: gradientColor 5s ease-in-out infinite;  /* تغيير الألوان بشكل تدريجي */
+}
+
+@keyframes gradientColor {
+    0% {
+        background-image: linear-gradient(45deg, #ff6347, #ffa07a, #add8e6, #90ee90);
+    }
+    25% {
+        background-image: linear-gradient(45deg, #ff4500, #ff6347, #ffb6c1, #d3ffce);
+    }
+    50% {
+        background-image: linear-gradient(45deg, #32cd32, #ff6347, #add8e6, #ff69b4);
+    }
+    75% {
+        background-image: linear-gradient(45deg, #ff8c00, #add8e6, #ffa07a, #90ee90);
+    }
+    100% {
+        background-image: linear-gradient(45deg, #ff6347, #ffa07a, #add8e6, #90ee90);
+    }
+}
+
+
+.order-type-label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 20px 0 10px;
+}
+
+.order-type-options {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+.order-type-container {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 30px 0;
+    color: white;
+    text-align: center;
+}
+
+.order-type-label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.order-type-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.order-type-options input[type="radio"] {
+    display: none;
+}
+
+.order-type-options label {
+    background-color: #333;
+    padding: 15px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.order-type-options input[type="radio"]:checked + label {
+    background-color: #FF6347;
+    border-color: #fff;
+    color: white;
+}
+
+.order-type-options label:hover {
+    background-color: #555;
+}
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 
 .menu-item {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* Stack items vertically (image, name, price, button) */
+    justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #555;
-    padding: 10px 0;
+    background-color: #333;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+    width: calc(20% - 20px); /* Adjust width to fit more items per row */
+    box-sizing: border-box; /* Ensures padding doesn't affect width calculation */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+.menu-item:hover {
+    transform: translateY(-5px); /* Lift the item when hovered */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Stronger shadow */
 }
 
 .menu-item img {
-    width: 50px;
-    height: 50px;
+    width: 100%;
+    height: 120px; /* ممكن تغيري الرقم حسب الحجم المناسب */
+    object-fit: cover; /* عشان تبقى الصورة مقصوصة بشكل كويس من غير ما تتمدد */
+    border-radius: 10px;
+    margin: 10px 0;
 }
 
-.menu-container {
-    margin: 20px;
+
+.menu-item span {
+    font-size: 1.2rem;
+    margin-bottom: 10px; /* Space between price and button */
+}
+
+.add-item {
+    background-color: #FF6347;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-item:hover {
+    background-color: #ff4500;
 }
 
 /* تصميم رسالة التنبيه */
@@ -88,9 +217,21 @@ h1 {
 
 /* قسم مراجعة الطلب */
 #review-section {
-    padding: 20px;
-    background-color: #222;
+    padding: 40px 20px;
+    background-color: #1c1c1c; /* لون داكن شامل */
     color: white;
+    min-height: 100vh; /* يملأ الشاشة بالكامل */
+}
+
+#review-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #4a90e2; /* لون مميز للعناوين */
+}
+
+.order-summary {
+    margin-bottom: 30px;
 }
 
 /* تنسيق العناصر داخل قسم المراجعة */
@@ -99,9 +240,10 @@ h1 {
     justify-content: space-between;
     align-items: center;
     background-color: #333;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .order-item button {
@@ -110,6 +252,7 @@ h1 {
     font-size: 1rem;
     cursor: pointer;
     border-radius: 5px;
+    border: none;
 }
 
 .order-item .delete-btn {
@@ -132,11 +275,42 @@ h1 {
 
 .total-price {
     margin-top: 20px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: bold;
     background-color: #333;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 8px;
     color: white;
 }
+
+/* تنسيق input رقم الطاولة وزر الإرسال */
+#table-number {
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: none;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#review-section button.submit-order {
+    display: block;
+    margin: 0 auto;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#review-section button.submit-order:hover {
+    background-color: #3b7dc2;
+}
+
