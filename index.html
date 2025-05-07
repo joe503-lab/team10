@@ -75,8 +75,13 @@
                     <input type="radio" id="reservation" name="orderType" value="Online Reservation">
                     <label for="reservation">Online Reservation</label>
                 </div>
+                <!-- Choose Time of reservation -->
+                <div id="reservation-time-container" style="display: none; margin-top: 20px;">
+                    <label for="reservation-time" style="font-size: 1.1rem;">Select Time:</label><br>
+                    <input type="time" id="reservation-time" name="reservation-time" style="padding: 10px; font-size: 1rem; margin-top: 10px;">
+                  </div>
             </div>
-            
+
 
             <a href="#" onclick="showReview()"><button class="button">Review Order</button></a>
         </div>
@@ -97,3 +102,4 @@
 </body>
 
 </html>
+
