@@ -52,15 +52,22 @@ document.addEventListener("DOMContentLoaded", function () {
                             .catch(err => console.error("❌ Failed to delete order:", err));
                         }
                     });
-
                     // Fill table row
                     row.innerHTML = `
-                        <td>${order.tableNumber}</td>
-                        <td>${order.order.map(i => `${i.item} (${i.price} EGP)`).join(", ")}</td>
-                        <td>${order.orderType || "Unknown"}</td>
-                        <td>${order.status || "Not Set"}</td>
-                        <td></td>
-                    `;
+                    <td>${order.tableNumber}</td>
+                    <td>${order.order.map(i => `${i.item} (${i.price} EGP)`).join(", ")}</td>
+                    <td>
+                        ${order.orderType}
+                        ${order.orderType === "Online Reservation" && order.reservationTime 
+                            ? ` <span style="color: #888;">⏰ ${order.reservationTime}</span>` 
+                            : ""}
+                    </td>
+                    <td>${order.status || "Not Set"}</td>
+                    <td></td>
+                `;
+                
+                
+                
                     row.children[4].appendChild(statusSelect); // Append status dropdown
                     row.children[4].appendChild(deleteBtn);    // Append delete button
 
