@@ -12,7 +12,7 @@ let currentId = 1;
 // Create a new order
 app.post("/order", (req, res) => {
     console.log("🟢 Request received at /order");
-    console.log("📦 Request body:", req.body); // دي خطوة مهمة للـ debug
+    console.log("📦 Request body:", req.body); 
 
     const { tableNumber, order, orderType } = req.body;
 
@@ -27,6 +27,7 @@ app.post("/order", (req, res) => {
         tableNumber,
         order,
         orderType,
+        reservationTime: req.body.reservationTime || null,
         status: "Being Cooked",
         time: new Date().toISOString()
     };
@@ -82,3 +83,4 @@ app.delete("/orders", (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+
